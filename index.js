@@ -1,8 +1,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer')
 const generateMarkdown = require('./utilities/generateMarkdown')
-// TODO: Create an array of questions for user input
-const MIT = 'MIT License'
 const questions = [
     'Project Title?\n',
     `Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
@@ -18,14 +16,10 @@ If you followed tutorials, include links to those here as well.\n`,
 ['MIT License','GNU AGPLv3','GNU GPLv3','GNU LGPLv3','Mozilla Public License Version 2.0',
 'Apache License 2.0','Boost Software License 1.0','The Unlicense'
 ],
-'Go the extra mile and write tests for your application. Then provide examples on how to run them here.\n'];
-
-// TODO: Create a function to write README file
+'Go the extra mile and write tests for your application. Then provide examples on how to run them here.\n','GitHub User Name\n','Email address\n'];
 function writeToFile(data) {
     fs.writeFile('README.md',generateMarkdown(data),(err) => err ? console.log(err):console.log("README.md sucessfully created"))
 }
-
-// TODO: Create a function to initialize app
 function init(){
     inquirer
     .prompt(
@@ -57,8 +51,8 @@ function init(){
             },
             {
                 type:'list',
-                name:'licence',
-                message:'select licence type',
+                name:'license',
+                message:'select license type',
                 choices:questions[5],
             },
             {
@@ -66,10 +60,18 @@ function init(){
                 message:questions[6],
                 name:'test',
             },
+            {
+                type:'input',
+                message:questions[7],
+                name:'github',
+            },
+            {
+                type:'input',
+                message:questions[8],
+                name:'email'
+            }
         ]
     ).then((data) => writeToFile(data))
 
 }
-
-// Function call to initialize app
 init();
